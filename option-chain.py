@@ -1,7 +1,40 @@
 import requests
 import pandas as pd
+import json
+from datetime import datetime, timezone
+from order import order_placement
+from sessiontoken import get_session_token
 
 #symbol=["INFY", "ICICIBANK","HDFCBANK"]
+customerDetail_url = "https://api.icicidirect.com/breezeapi/api/v1/customerdetails"
+session_key=52615839
+secret_key= ""
+api_key= ""
+time_stamp = datetime.now(timezone.utc).isoformat()[:19] + '.000Z'
+
+#session_token = get_session_token("https://api.icicidirect.com/breezeapi/api/v1/customerdetails", api_key, session_key)
+
+#---------------------------------------Delete this 
+payload = json.dumps({
+  "stock_code": "NIFTY",
+  "exchange_code": "NFO",
+  "product": "options",
+  "action": "buy",
+  "order_type": "limit",
+  "quantity": "1",
+  "price": "1",
+  "validity": "day",
+  "stoploss": "",
+  "validity_date": "2025-08-14T06:00:00.000Z",
+  "disclosed_quantity": "0",
+  "expiry_date": "2025-09-12T06:00:00.000Z",
+  "right": "call",
+  "strike_price": "2500",
+  "user_remark": "testing" 
+  }, separators=(',', ':'))
+
+#order_placement("https://api.icicidirect.com/breezeapi/api/v1/order", payload, "`Z3n52161270k(0f513257F945yX257#", "58Y68D`8G5EZ89j17i4N48J3217h6m09", session_token)
+#
 
 try:
     with open("./symbol.txt") as file:
@@ -85,6 +118,7 @@ def dataframe(rawop):
     #optionchain = pd.DataFrame(data)
     #print(optionchain)
     return data
+
 
 curlapi(symbol)
 #processedoptionchain = dataframe(rawOp)
