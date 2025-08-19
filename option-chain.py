@@ -1,18 +1,20 @@
 import requests
 import pandas as pd
 import json
+import sys
 from datetime import datetime, timezone
-from order import order_placement
+from order import order_placement, get_list
 from sessiontoken import get_session_token
 
 #symbol=["INFY", "ICICIBANK","HDFCBANK"]
 customerDetail_url = "https://api.icicidirect.com/breezeapi/api/v1/customerdetails"
 session_key=52615839
-secret_key= ""
-api_key= ""
+secret_key= sys.argv[2]
+print(secret_key)
+api_key= sys.argv[1]
 time_stamp = datetime.now(timezone.utc).isoformat()[:19] + '.000Z'
 
-#session_token = get_session_token("https://api.icicidirect.com/breezeapi/api/v1/customerdetails", api_key, session_key)
+session_token = get_session_token("https://api.icicidirect.com/breezeapi/api/v1/customerdetails", api_key, session_key)
 
 #---------------------------------------Delete this 
 payload = json.dumps({
@@ -34,6 +36,7 @@ payload = json.dumps({
   }, separators=(',', ':'))
 
 #order_placement("https://api.icicidirect.com/breezeapi/api/v1/order", payload, "`Z3n52161270k(0f513257F945yX257#", "58Y68D`8G5EZ89j17i4N48J3217h6m09", session_token)
+get_list("https://api.icicidirect.com/breezeapi/api/v1/order", "NFO", secret_key, api_key, session_token)
 #
 
 try:

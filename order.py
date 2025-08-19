@@ -35,6 +35,6 @@ def get_list(api_url, exchange_code, secret_key, appkey, session_token):
         'X-SessionToken': session_token
     }
 
-    response = requests.request("GET", url, headers=headers, data=payload)
+    response = requests.request("GET", api_url, headers=headers, data=payload)
     print(response.text)
     
