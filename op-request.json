@@ -1,0 +1,16 @@
+{
+    "session_key":52705050,
+    "customerDetail_url":"https://api.icicidirect.com/breezeapi/api/v1/customerdetails",
+    "optionchain_method":{
+        "url":"https://api.icicidirect.com/breezeapi/api/v1/optionchain",
+        "payload":{
+            "stock_code": "NIFTY",
+            "exchange_code": "NFO",
+            "right": "others",
+            "expiry_date": "2025-08-28T06:00:00.000Z",
+            "product_type": "options"
+        },
+        "strikediff":50,
+        "lot_size":75
+    }
+}
