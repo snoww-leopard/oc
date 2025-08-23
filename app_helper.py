@@ -16,3 +16,10 @@ def get_session_token(api_url, api_key, session_key):
     session_token = data["Success"]["session_token"]
     print(f"session token: {session_token}")
     return session_token
+
+def load_options_request_json():
+    try:
+        with open("./op-request.json") as file:
+            return json.load(file)
+    except FileNotFoundError:
+            print("Error: The file 'symbol.txt' was not found.")
