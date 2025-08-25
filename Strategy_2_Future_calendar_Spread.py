@@ -1,7 +1,9 @@
 from datetime import datetime
 import math
+import sys
 
-from icicFuture import get_future_payoff
+from Strategy_2_FuturePayOff_definition import get_future_payoff
+from app_helper import get_session_token, load_options_request_json
 
 def calendar_arbitrage(spot, F1, F2, T1_days, T2_days, 
                        risk_free_rate=0.07, dividend_yield=0.01, 
@@ -79,24 +81,23 @@ def calendar_arbitrage(spot, F1, F2, T1_days, T2_days,
 # Example usage
 # Read and parse the file
 stock_data = []
+op_request = load_options_request_json()
+session_key = op_request['session_key']
+secret_key= sys.argv[2]
+appkey= sys.argv[1]
 
-with open("StockCodes.txt", "r") as f:   # replace input.txt with your filename
-    for line in f:
-        # Remove whitespace/newlines and split by space
-        parts = line.strip().split()
-        if len(parts) == 4:
-            stockcode, lotsize, current_expiry, nearfuture_expiry = parts
-            lotsize = int(lotsize)  # convert to integer
-            stock_data.append({
-                "stockcode": stockcode,
-                "lotsize": lotsize,
-                "current_expiry": current_expiry,
-                "nearfuture_expiry": nearfuture_expiry
+for line in op_request["optionchain_method"]:
+    # Remove whitespace/newlines and split by space
+    stock_data.append({
+                "stockcode": line["payload"]["stock_code"],
+                "lotsize": line["lot_size"],
+                "current_expiry": line["payload"]["expiry_date"],
+                "nearfuture_expiry": line["payload"]["nearfuture_expiry"]
             })
-
+    print(stock_data)
+    
 # Example: print parsed data
 for record in stock_data:
-    print( record.get("stockcode"), record.get("lotsize"), record.get("current_expiry"), record.get("nearfuture_expiry") )
     today = datetime.today()
 
     # Calculate difference
@@ -107,11 +108,11 @@ for record in stock_data:
     expiry_date = record.get("nearfuture_expiry")
     expiry_date_current = record.get("current_expiry")
     print(f"Stock: {stock_code}, expiry: {expiry_date}, expiryCurrent: {expiry_date_current}")
-    result_current = get_future_payoff(stock_code, expiry_date_current)
+    result_current = get_future_payoff(stock_code, expiry_date_current, appkey, secret_key, session_key)
     #print(result_current)
     spot_price = result_current.get("spot_price")
     future_value_1 = result_current.get("future_value")
-    result_future = get_future_payoff(stock_code, expiry_date)
+    result_future = get_future_payoff(stock_code, expiry_date, appkey, secret_key, session_key)
     future_value_2 = result_future.get("future_value")
 
     print(f"Spot Price: {spot_price}, Future Value 1: {future_value_1}, Future Value 2: {future_value_2}, T1 Days: {t1_days}, T2 Days: {t2_days}, Lot Size: {lotsize}") 

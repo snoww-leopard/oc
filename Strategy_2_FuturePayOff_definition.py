@@ -2,27 +2,13 @@ import requests
 import json
 import hashlib
 from datetime import datetime, timezone
+from app_helper import get_session_token
 
-def get_future_payoff(stock_code, expiry_date):
+def get_future_payoff(stock_code, expiry_date, appkey, secret_key, session_key):
     customerDetail_url = "https://api.icicidirect.com/breezeapi/api/v1/customerdetails"
-    session_key = 
-    secret_key = '0N3^UM6j'
-    appkey = '=1312AM'
     time_stamp = datetime.now(timezone.utc).isoformat()[:19] + '.000Z'
 
-    customerDetail_payload = json.dumps({
-        "SessionToken": session_key,
-        "AppKey": appkey
-    })
-
-    customerDetail_headers = {
-        'Content-Type': 'application/json',
-    }
-
-    customerDetail_response = requests.request(
-        "GET", customerDetail_url, headers=customerDetail_headers, data=customerDetail_payload)
-    data = json.loads(customerDetail_response.text)
-    session_token = data["Success"]["session_token"]
+    session_token = get_session_token(customerDetail_url, appkey, session_key)
 
     url = "https://api.icicidirect.com/breezeapi/api/v1/quotes"
 
@@ -55,7 +41,7 @@ def get_future_payoff(stock_code, expiry_date):
     #print("Spot Price:", spot_price)
     #print("Future Value:", futurevalue)
     return {"spot_price": spot_price, "future_value": futurevalue}
-#stock_code = "SRF"
-#expiry_date = "2025-09-30T06:00:00.000Z"
-#result = get_future_payoff(stock_code, expiry_date)
-#print("In functionFuturePayoffresult:", result.get("spot_price"), result.get("future_value"))
+# stock_code = "SRF"
+# expiry_date = "2025-09-30T06:00:00.000Z"
+# result = get_future_payoff(stock_code, expiry_date)
+# print("In functionFuturePayoffresult:", result.get("spot_price"), result.get("future_value"))
