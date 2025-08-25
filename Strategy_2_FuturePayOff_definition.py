@@ -5,9 +5,9 @@ from datetime import datetime, timezone
 
 def get_future_payoff(stock_code, expiry_date):
     customerDetail_url = "https://api.icicidirect.com/breezeapi/api/v1/customerdetails"
-    session_key = 52724357
-    secret_key = '0N3)929DW@2Q98I810949X436y3^UM6j'
-    appkey = '5541c144r8VC59X9117ek4573=1312AM'
+    session_key = 
+    secret_key = '0N3^UM6j'
+    appkey = '=1312AM'
     time_stamp = datetime.now(timezone.utc).isoformat()[:19] + '.000Z'
 
     customerDetail_payload = json.dumps({
