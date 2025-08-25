@@ -1,16 +1,43 @@
 {
-    "session_key":52705050,
+    "session_key":52726540,
     "customerDetail_url":"https://api.icicidirect.com/breezeapi/api/v1/customerdetails",
-    "optionchain_method":{
-        "url":"https://api.icicidirect.com/breezeapi/api/v1/optionchain",
-        "payload":{
-            "stock_code": "NIFTY",
-            "exchange_code": "NFO",
-            "right": "others",
-            "expiry_date": "2025-08-28T06:00:00.000Z",
-            "product_type": "options"
+    "option_chain_url":"https://api.icicidirect.com/breezeapi/api/v1/optionchain",
+    "optionchain_method":[
+        {
+            "payload":{
+                "stock_code": "NIFTY",
+                "exchange_code": "NFO",
+                "right": "others",
+                "expiry_date": "2025-08-28T06:00:00.000Z",
+                "nearfuture_expiry":"2025-08-28T06:00:00.000Z",
+                "product_type": "options"
+            },
+            "strikediff":50,
+            "lot_size":75
         },
-        "strikediff":50,
-        "lot_size":75
-    }
+        {
+            "payload":{
+                "stock_code": "SRF",
+                "exchange_code": "NFO",
+                "right": "others",
+                "expiry_date": "2025-08-28T06:00:00.000Z",
+                "nearfuture_expiry":"2025-08-28T06:00:00.000Z",
+                "product_type": "options"
+            },
+            "strikediff":50,
+            "lot_size":75
+        },
+        {
+            "payload":{
+                "stock_code": "ABB",
+                "exchange_code": "NFO",
+                "right": "others",
+                "expiry_date": "2025-08-28T06:00:00.000Z",
+                "nearfuture_expiry":"2025-08-28T06:00:00.000Z",
+                "product_type": "options"
+            },
+            "strikediff":50,
+            "lot_size":75
+        }
+    ]
 }
