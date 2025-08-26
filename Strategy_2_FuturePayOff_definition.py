@@ -4,13 +4,10 @@ import hashlib
 from datetime import datetime, timezone
 from app_helper import get_session_token
 
-def get_future_payoff(stock_code, expiry_date, appkey, secret_key, session_key):
-    customerDetail_url = "https://api.icicidirect.com/breezeapi/api/v1/customerdetails"
+def get_future_payoff(op_request, stock_code, expiry_date, appkey, secret_key, session_key):
     time_stamp = datetime.now(timezone.utc).isoformat()[:19] + '.000Z'
 
-    session_token = get_session_token(customerDetail_url, appkey, session_key)
-
-    url = "https://api.icicidirect.com/breezeapi/api/v1/quotes"
+    session_token = get_session_token(op_request["customerDetail_url"], appkey, session_key)
 
     payload = json.dumps({
         "stock_code": stock_code,
@@ -30,7 +27,7 @@ def get_future_payoff(stock_code, expiry_date, appkey, secret_key, session_key):
         'X-SessionToken': session_token
     }
 
-    response = requests.request("GET", url, headers=headers, data=payload)
+    response = requests.request("GET", op_request["quote_url"], headers=headers, data=payload)
     print("Response Status Code get quote:", response.status_code, response.text  )
     response_json = response.json()
 

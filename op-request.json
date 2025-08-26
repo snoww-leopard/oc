@@ -1,7 +1,8 @@
 {
-    "session_key":52726540,
+    "session_key":52741843,
     "customerDetail_url":"https://api.icicidirect.com/breezeapi/api/v1/customerdetails",
     "option_chain_url":"https://api.icicidirect.com/breezeapi/api/v1/optionchain",
+    "quote_url":"https://api.icicidirect.com/breezeapi/api/v1/quotes",
     "optionchain_method":[
         {
             "payload":{
@@ -30,6 +31,30 @@
         {
             "payload":{
                 "stock_code": "ABB",
+                "exchange_code": "NFO",
+                "right": "others",
+                "expiry_date": "2025-08-28T06:00:00.000Z",
+                "nearfuture_expiry":"2025-08-28T06:00:00.000Z",
+                "product_type": "options"
+            },
+            "strikediff":50,
+            "lot_size":75
+        },
+        {
+            "payload":{
+                "stock_code": "RELIND",
+                "exchange_code": "NFO",
+                "right": "others",
+                "expiry_date": "2025-08-28T06:00:00.000Z",
+                "nearfuture_expiry":"2025-08-28T06:00:00.000Z",
+                "product_type": "options"
+            },
+            "strikediff":50,
+            "lot_size":75
+        },
+        {
+            "payload":{
+                "stock_code": "ASHLEY",
                 "exchange_code": "NFO",
                 "right": "others",
                 "expiry_date": "2025-08-28T06:00:00.000Z",

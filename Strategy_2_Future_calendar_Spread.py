@@ -108,11 +108,11 @@ for record in stock_data:
     expiry_date = record.get("nearfuture_expiry")
     expiry_date_current = record.get("current_expiry")
     print(f"Stock: {stock_code}, expiry: {expiry_date}, expiryCurrent: {expiry_date_current}")
-    result_current = get_future_payoff(stock_code, expiry_date_current, appkey, secret_key, session_key)
+    result_current = get_future_payoff(op_request, stock_code, expiry_date_current, appkey, secret_key, session_key)
     #print(result_current)
     spot_price = result_current.get("spot_price")
     future_value_1 = result_current.get("future_value")
-    result_future = get_future_payoff(stock_code, expiry_date, appkey, secret_key, session_key)
+    result_future = get_future_payoff(op_request, stock_code, expiry_date, appkey, secret_key, session_key)
     future_value_2 = result_future.get("future_value")
 
     print(f"Spot Price: {spot_price}, Future Value 1: {future_value_1}, Future Value 2: {future_value_2}, T1 Days: {t1_days}, T2 Days: {t2_days}, Lot Size: {lotsize}") 
