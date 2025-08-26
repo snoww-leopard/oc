@@ -10,7 +10,7 @@
                 "exchange_code": "NFO",
                 "right": "others",
                 "expiry_date": "2025-08-28T06:00:00.000Z",
-                "nearfuture_expiry":"2025-08-28T06:00:00.000Z",
+                "nearfuture_expiry":"2025-09-30T06:00:00.000Z",
                 "product_type": "options"
             },
             "strikediff":50,
@@ -22,7 +22,7 @@
                 "exchange_code": "NFO",
                 "right": "others",
                 "expiry_date": "2025-08-28T06:00:00.000Z",
-                "nearfuture_expiry":"2025-08-28T06:00:00.000Z",
+                "nearfuture_expiry":"2025-09-30T06:00:00.000Z",
                 "product_type": "options"
             },
             "strikediff":50,
@@ -34,7 +34,7 @@
                 "exchange_code": "NFO",
                 "right": "others",
                 "expiry_date": "2025-08-28T06:00:00.000Z",
-                "nearfuture_expiry":"2025-08-28T06:00:00.000Z",
+                "nearfuture_expiry":"2025-09-30T06:00:00.000Z",
                 "product_type": "options"
             },
             "strikediff":50,
@@ -46,7 +46,7 @@
                 "exchange_code": "NFO",
                 "right": "others",
                 "expiry_date": "2025-08-28T06:00:00.000Z",
-                "nearfuture_expiry":"2025-08-28T06:00:00.000Z",
+                "nearfuture_expiry":"2025-09-30T06:00:00.000Z",
                 "product_type": "options"
             },
             "strikediff":50,
@@ -58,7 +58,7 @@
                 "exchange_code": "NFO",
                 "right": "others",
                 "expiry_date": "2025-08-28T06:00:00.000Z",
-                "nearfuture_expiry":"2025-08-28T06:00:00.000Z",
+                "nearfuture_expiry":"2025-09-30T06:00:00.000Z",
                 "product_type": "options"
             },
             "strikediff":50,
