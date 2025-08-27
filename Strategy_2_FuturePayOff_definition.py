@@ -4,40 +4,40 @@ import hashlib
 from datetime import datetime, timezone
 from app_helper import get_session_token
 
-def get_future_payoff(op_request, stock_code, expiry_date, appkey, secret_key, session_key):
-    time_stamp = datetime.now(timezone.utc).isoformat()[:19] + '.000Z'
+# def get_future_payoff(op_request, stock_code, expiry_date, appkey, secret_key, session_key):
+#     time_stamp = datetime.now(timezone.utc).isoformat()[:19] + '.000Z'
 
-    session_token = get_session_token(op_request["customerDetail_url"], appkey, session_key)
+#     session_token = get_session_token(op_request["customerDetail_url"], appkey, session_key)
 
-    payload = json.dumps({
-        "stock_code": stock_code,
-        "exchange_code": "NFO",
-        "right": "others",
-        "expiry_date": expiry_date,
-        "product_type": "futures"
-    }, separators=(',', ':'))
+#     payload = json.dumps({
+#         "stock_code": stock_code,
+#         "exchange_code": "NFO",
+#         "right": "others",
+#         "expiry_date": expiry_date,
+#         "product_type": "futures"
+#     }, separators=(',', ':'))
 
-    checksum = hashlib.sha256((time_stamp + payload + secret_key).encode("utf-8")).hexdigest()
+#     checksum = hashlib.sha256((time_stamp + payload + secret_key).encode("utf-8")).hexdigest()
 
-    headers = {
-        'Content-Type': 'application/json',
-        'X-Checksum': 'token ' + checksum,
-        'X-Timestamp': time_stamp,
-        'X-AppKey': appkey,
-        'X-SessionToken': session_token
-    }
+#     headers = {
+#         'Content-Type': 'application/json',
+#         'X-Checksum': 'token ' + checksum,
+#         'X-Timestamp': time_stamp,
+#         'X-AppKey': appkey,
+#         'X-SessionToken': session_token
+#     }
 
-    response = requests.request("GET", op_request["quote_url"], headers=headers, data=payload)
-    print("Response Status Code get quote:", response.status_code, response.text  )
-    response_json = response.json()
+#     response = requests.request("GET", op_request["quote_url"], headers=headers, data=payload)
+#     print("Response Status Code get quote:", response.status_code, response.text  )
+#     response_json = response.json()
 
-    option_chain = response_json.get("Success", [])
-    #print("Option Chain:", option_chain)
-    futurevalue = next((item.get("ltp") for item in option_chain), None)
-    spot_price = option_chain[0].get("spot_price") if option_chain else None
-    #print("Spot Price:", spot_price)
-    #print("Future Value:", futurevalue)
-    return {"spot_price": spot_price, "future_value": futurevalue}
+#     option_chain = response_json.get("Success", [])
+#     #print("Option Chain:", option_chain)
+#     futurevalue = next((item.get("ltp") for item in option_chain), None)
+#     spot_price = option_chain[0].get("spot_price") if option_chain else None
+#     #print("Spot Price:", spot_price)
+#     #print("Future Value:", futurevalue)
+#     return {"spot_price": spot_price, "future_value": futurevalue}
 # stock_code = "SRF"
 # expiry_date = "2025-09-30T06:00:00.000Z"
 # result = get_future_payoff(stock_code, expiry_date)

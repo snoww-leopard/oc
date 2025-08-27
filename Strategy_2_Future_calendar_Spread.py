@@ -2,7 +2,7 @@ from datetime import datetime
 import math
 import sys
 
-from Strategy_2_FuturePayOff_definition import get_future_payoff
+from breeze_helper import get_future_payoff
 from app_helper import get_session_token, load_options_request_json
 
 def calendar_arbitrage(spot, F1, F2, T1_days, T2_days, 
@@ -86,6 +86,9 @@ session_key = op_request['session_key']
 secret_key= sys.argv[2]
 appkey= sys.argv[1]
 
+customerDetail_url = op_request['customerDetail_url']
+session_token = get_session_token(customerDetail_url, appkey, session_key)
+
 for line in op_request["optionchain_method"]:
     # Remove whitespace/newlines and split by space
     stock_data.append({
@@ -108,11 +111,11 @@ for record in stock_data:
     expiry_date = record.get("nearfuture_expiry")
     expiry_date_current = record.get("current_expiry")
     print(f"Stock: {stock_code}, expiry: {expiry_date}, expiryCurrent: {expiry_date_current}")
-    result_current = get_future_payoff(op_request, stock_code, expiry_date_current, appkey, secret_key, session_key)
+    result_current = get_future_payoff(op_request["quote_url"], stock_code, expiry_date_current, secret_key, appkey, session_token)
     #print(result_current)
     spot_price = result_current.get("spot_price")
     future_value_1 = result_current.get("future_value")
-    result_future = get_future_payoff(op_request, stock_code, expiry_date, appkey, secret_key, session_key)
+    result_future = get_future_payoff(op_request["quote_url"], stock_code, expiry_date_current, secret_key, appkey, session_token)
     future_value_2 = result_future.get("future_value")
 
     print(f"Spot Price: {spot_price}, Future Value 1: {future_value_1}, Future Value 2: {future_value_2}, T1 Days: {t1_days}, T2 Days: {t2_days}, Lot Size: {lotsize}") 

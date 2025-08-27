@@ -24,7 +24,38 @@ def get_optionchain(url,appkey, session_token,payload,checksum):
 
 	return response.json()
 
-def process_option_data(option_chain, strikediff, lot_size):
+def get_future_payoff(quote_url, stock_code, expiry_date, secret_key, appkey, session_token):
+	time_stamp = datetime.now(timezone.utc).isoformat()[:19] + '.000Z'
+	payload = json.dumps({
+		"stock_code": stock_code,
+		"exchange_code": "NFO",
+		"right": "others",
+		"expiry_date": expiry_date,
+		"product_type": "futures"
+	}, separators=(',', ':'))
+
+	checksum = hashlib.sha256((time_stamp + payload + secret_key).encode("utf-8")).hexdigest()
+
+	headers = {
+        'Content-Type': 'application/json',
+        'X-Checksum': 'token ' + checksum,
+        'X-Timestamp': time_stamp,
+        'X-AppKey': appkey,
+        'X-SessionToken': session_token
+    }
+	response = requests.request("GET", quote_url, headers=headers, data=payload)
+
+	response_json = response.json()
+	print(f"$$$$$$$$$$$$$$$$${response_json}")
+	option_chain = response_json.get("Success", [])
+	
+	futurevalue = next((item.get("ltp") for item in option_chain), 0)
+	spot_price = option_chain[0].get("spot_price") if option_chain else 0
+	return {"spot_price": spot_price, "future_value": futurevalue}
+
+		
+
+def process_option_data(option_chain, strikediff, lot_size, stock_code, expiry_date, appkey, secret_key, session_token, quote_url):
 	result = []
 	strikes = sorted([item.get("strike_price", 0) for item in option_chain])
 
@@ -49,7 +80,8 @@ def process_option_data(option_chain, strikediff, lot_size):
 		# Find ltp for put at K2
 		K2 = strike_price + strikediff  # or your logic for next strike
 		P2 = next((i.get("ltp") for i in filtered if i.get("strike_price") == K2 and i.get("right") == "Put"), 0)
-		F = 25110.4
+
+		F = get_future_payoff(quote_url, stock_code, expiry_date, secret_key, appkey, session_token).get("future_value")
 		#K1, K1, K2, C1, P2, F)
 		payoffU = total_payoff(K1, strike_price, K2, C1, P2, F)
 		payoffL = total_payoff(K2, strike_price, K2, C1, P2, F)

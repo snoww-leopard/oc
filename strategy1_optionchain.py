@@ -38,6 +38,6 @@ for item in op_request['optionchain_method']:
     lot_size = item['lot_size'] # lot size for ICICI Bank options
 
 
-    result = process_option_data(option_chain, strikediff, lot_size)
+    result = process_option_data(option_chain, strikediff, lot_size, item['payload']["stock_code"], item['payload']["expiry_date"], appkey, secret_key, session_token, op_request["quote_url"])
 
     #print(result)
