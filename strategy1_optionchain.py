@@ -2,7 +2,7 @@ import json
 import hashlib
 import sys
 from datetime import datetime, timezone
-from app_helper import get_session_token, load_options_request_json
+from app_helper import get_session_token, load_options_request_json, log_oc_event
 from breeze_helper import get_optionchain,process_option_data
 #from lowRiskReward import total_payoff
 
@@ -12,6 +12,8 @@ session_key = op_request['session_key']
 secret_key= sys.argv[2]
 print(secret_key)
 appkey= sys.argv[1]
+
+log_oc_event(1,1,1,1)
 
 
 customerDetail_url = op_request['customerDetail_url']
