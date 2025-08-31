@@ -80,8 +80,8 @@ def process_option_data(option_chain, strikediff, lot_size, stock_code, expiry_d
 		# Find ltp for put at K2
 		K2 = strike_price + strikediff  # or your logic for next strike
 		P2 = next((i.get("ltp") for i in filtered if i.get("strike_price") == K2 and i.get("right") == "Put"), 0)
-		future_value = get_future_payoff(quote_url, stock_code, expiry_date, secret_key, appkey, session_token)
-		F = future_value.get("future_value")
+		#future_value = get_future_payoff(quote_url, stock_code, expiry_date, secret_key, appkey, session_token)
+		F = 400 #float(future_value.get("future_value", 0))
 		#K1, K1, K2, C1, P2, F)
 		payoffU = total_payoff(K1, strike_price, K2, C1, P2, F)
 		payoffL = total_payoff(K2, strike_price, K2, C1, P2, F)
