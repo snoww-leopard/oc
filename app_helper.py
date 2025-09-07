@@ -2,6 +2,7 @@ import requests
 import json
 from datetime import datetime
 
+
 def get_session_token(api_url, api_key, session_key):
     customerDetail_url = api_url
     customerDetail_payload = json.dumps({
